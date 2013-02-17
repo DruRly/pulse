@@ -135,6 +135,7 @@ DEPENDENCIES
   httparty (= 0.10.2)
   jquery-rails
   json
+  pry
   pry-rails (= 0.2.2)
   rails (= 3.2.12)
   rspec-rails (~> 2.0)
