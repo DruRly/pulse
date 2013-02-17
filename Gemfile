@@ -26,10 +26,10 @@ gem 'httparty', '0.10.2'
 
 group :test, :development do
     gem "rspec-rails", '~> 2.0'
+    gem 'pry-rails', '0.2.2'
+    gem 'pry'
 end
 
-gem 'pry-rails', '0.2.2', group: :development
-gem 'pry', group: :development
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
