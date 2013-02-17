@@ -14,13 +14,12 @@ describe Petition do
     end
   end
 
-
-  describe "#crete_from_hash" do
+  describe "::crete_from_hash" do
     it "creates a petition from hash values" do
       hash = Petition.get_petitions(1).first
       petition = Petition.create_from_hash(hash)
       petition.api_id.should == hash["id"]
-      petition.type.should == hash["type"]
+      petition.petition_type.should == hash["type"]
       petition.title.should == hash["title"]
       petition.body.should == hash["body"]
       petition.signature_threshold.should == hash["signature threshold"]
