@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  api_id: 1
+  type: 
+  url: MyText
+  title: MyString
+  text: MyString
+  body: MyText
+  signature_threshold: 1
+  signature_count: 1
+  signatures_needed: 1
+  deadline: 1
+  status: MyString
+  petition_created_at: 1
+
+two:
+  api_id: 1
+  type: 
+  url: MyText
+  title: MyString
+  text: MyString
+  body: MyText
+  signature_threshold: 1
+  signature_count: 1
+  signatures_needed: 1
+  deadline: 1
+  status: MyString
+  petition_created_at: 1
