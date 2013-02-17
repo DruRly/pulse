@@ -11,14 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130217153119) do
+ActiveRecord::Schema.define(:version => 20130217200031) do
 
   create_table "petitions", :force => true do |t|
-    t.integer  "api_id"
-    t.string   "type"
+    t.string   "api_id"
+    t.string   "petition_type"
     t.text     "url"
     t.string   "title"
-    t.string   "text"
     t.text     "body"
     t.integer  "signature_threshold"
     t.integer  "signature_count"

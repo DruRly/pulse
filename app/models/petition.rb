@@ -9,4 +9,30 @@ class Petition < ActiveRecord::Base
     response = HTTParty.get(url).body
     JSON.parse(response)["results"]
   end
+
+  def self.pull_all
+    offset = 0
+    results = [1]
+    until results == []
+      results = self.get_petitions(100, offset)
+      offset += 100
+    end
+  end
+
+  def self.create_from_hash(hash)
+    hash = hash.with_indifferent_access
+    Petition.create(
+      :api_id => hash.try(:[], :id),
+      :title => hash.try(:[], :title),
+      :type => hash.try(:[], :type),
+      :body => hash.try(:[], :body),
+      :signature_threshold => hash.try(:[], "signature threshold"),
+      :signature_count => hash.try(:[], "signature count"),
+      :signatures_needed => hash.try(:[], "signatures needed"),
+      :url => hash.try(:[], :url),
+      :deadline => hash.try(:[], :deadline),
+      :status => hash.try(:[], :status),
+      :petition_created_at =>  hash.try(:[], :created)
+    )
+  end
 end
