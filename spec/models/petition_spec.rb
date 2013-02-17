@@ -14,6 +14,14 @@ describe Petition do
     end
   end
 
+  describe "::pull_all" do
+    it "grabs 382 petition records and 3 issues for the first petition" do
+      Petition.pull_all
+      Petition.count.should == 381
+      Petition.first.issues.count.should == 3
+    end
+  end
+
   describe "::crete_from_hash" do
     it "creates a petition from hash values" do
       hash = Petition.get_petitions(1).first

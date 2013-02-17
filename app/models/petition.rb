@@ -1,6 +1,9 @@
 class Petition < ActiveRecord::Base
   attr_accessible :api_id, :body, :deadline, :petition_created_at, :signature_count, :signature_threshold, :signatures_needed, :status, :text, :title, :petition_type, :url
 
+  has_many :petition_issues
+  has_many :issues, through: :petition_issues
+
   WTP_KEY ||= YAML.load_file("#{Rails.root}/config/wtp.yml")["api_key"]
 
   def self.get_petitions(count=10, offset=0)
@@ -14,7 +17,17 @@ class Petition < ActiveRecord::Base
     offset, results = 0
     until results == []
       results = self.get_petitions(100, offset)
-      results.map { |result_hash| Petition.create_from_hash(result_hash) }
+      results.map do |result_hash|
+        petition = Petition.create_from_hash(result_hash)
+        result_hash["issues"].map do |issue_hash|
+          issue_hash = issue_hash.with_indifferent_access
+          issue = Issue.find_or_create_by_api_id(
+            :api_id => issue_hash.try(:[], :id),
+            :name =>  issue_hash.try(:[], :name)
+          )
+          PetitionIssue.where(petition_id: petition.id, issue_id: issue.id).first_or_create
+        end
+      end
       offset += 100
     end
   end

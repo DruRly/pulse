@@ -1,4 +1,4 @@
 require 'spec_helper'
 
-describe Issue do
+describe PetitionIssue do
 end
