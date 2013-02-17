@@ -22,9 +22,10 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'httparty', '0.10.2'
 
 group :test, :development do
-    gem "rspec-rails", "~> 2.0"
+    gem "rspec-rails", '~> 2.0'
 end
 
 # To use ActiveModel has_secure_password
