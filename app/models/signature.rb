@@ -1,6 +1,6 @@
 class Signature < ActiveRecord::Base
   belongs_to :petition
-  attr_accessible :api_id, :city, :created, :name, :state, :signature_type, :zip, :petition_id
+  attr_accessible :api_id, :city, :created, :name, :state, :signature_type, :zip, :petition_id, :signature_date
   belongs_to :petitions
 
   def self.create_mocks(count=100)
@@ -18,6 +18,12 @@ class Signature < ActiveRecord::Base
         created: timestamp,
         petition_id: petition_id
       )
+    end
+  end
+
+  def self.store_dates
+    Signature.all.map do |s|
+      s.update_attribute(:signature_date, Time.at(s.created).to_date)
     end
   end
 end
