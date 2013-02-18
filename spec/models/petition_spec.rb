@@ -15,10 +15,11 @@ describe Petition do
   end
 
   describe "::pull_all" do
-    it "grabs 382 petition records and 3 issues for the first petition" do
+    it "grabs petition records and associated issues" do
       Petition.pull_all
-      Petition.count.should == 381
-      Petition.first.issues.count.should == 3
+      Petition.count.should > 300
+      Issue.count.should == 39
+      Petition.first.issues.count.should >= 1
     end
   end
 
