@@ -3,6 +3,7 @@ class Petition < ActiveRecord::Base
 
   has_many :petition_issues
   has_many :issues, through: :petition_issues
+  has_many :signatures
 
   WTP_KEY ||= YAML.load_file("#{Rails.root}/config/wtp.yml")["api_key"]
 
