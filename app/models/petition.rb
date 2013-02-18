@@ -7,6 +7,17 @@ class Petition < ActiveRecord::Base
 
   WTP_KEY ||= YAML.load_file("#{Rails.root}/config/wtp.yml")["api_key"]
 
+
+  def last_365_days_signature_counts
+    days_count = []
+    date = Date.today
+    365.times.each do |i|
+      date = date.prev_day
+      days_count << signatures.where(signature_date: date).count
+    end
+    days_count
+  end
+
   def self.get_petitions(count=10, offset=0)
     #Store your api_key in config/wtp_config.yml as (api_key: "your api key")
     url = "https://petitions.whitehouse.gov/api/v1/petitions.json?key=#{WTP_KEY}&limit=#{count}&offset=#{offset}"

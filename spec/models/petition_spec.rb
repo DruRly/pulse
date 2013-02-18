@@ -1,6 +1,19 @@
 require 'spec_helper'
 
 describe Petition do
+
+  describe "#last_365_days_signature_counts" do
+    it "includes 365 elements with non-zero counts" do
+      petition = Petition.create
+      Signature.create_mocks(5000)
+      Signature.store_dates
+      signature_counts = petition.last_365_days_signature_counts
+      signature_counts.count.should == 365
+      signature_counts.first.should_not == 0
+      signature_counts.last.should_not == 0
+    end
+  end
+
   describe "::get_petitions" do
     it "retrieves peitions based on count and offset params" do
       petitions = Petition.get_petitions(10,10)
