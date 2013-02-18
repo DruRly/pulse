@@ -42,6 +42,7 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    googlecharts (1.6.8)
     hike (1.2.1)
     httparty (0.10.2)
       multi_json (~> 1.0)
@@ -132,6 +133,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  googlecharts
   httparty (= 0.10.2)
   jquery-rails
   json
