@@ -9,13 +9,33 @@ class Petition < ActiveRecord::Base
 
 
   def last_365_days_signature_counts
-    days_count = []
-    date = Date.today
-    365.times.each do |i|
-      date = date.prev_day
-      days_count << signatures.where(signature_date: date).count
+    unless @days_count
+      days_count = []
+      date = Date.today
+      365.times.each do |i|
+        date = date.prev_day
+        days_count << signatures.where(signature_date: date).count
+      end
     end
-    days_count
+    @days_count ||= days_count
+  end
+
+  def last_365_days_growth_rates
+    signature_counts = last_365_days_signature_counts
+    rates = []
+    signature_counts.each_with_index do |elem, i|
+      if i == 0
+        rates << 0
+      else
+        if elem == 0
+          div = 1
+        else
+          div = elem
+        end
+        rates << (((elem - signature_counts[i - 1])/div) * 100)
+      end
+    end
+    rates
   end
 
   def self.get_petitions(count=10, offset=0)
