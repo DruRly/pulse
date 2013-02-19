@@ -31,7 +31,11 @@ class Petition < ActiveRecord::Base
         if old_value == 0
           rates << (((current_value)/1.0) * 100)
         else
-          rates << (((current_value - old_value)/old_value.to_f) * 100)
+          change_rate = (((current_value - old_value)/old_value.to_f) * 100)
+          if change_rate < 0
+            change_rate = 0
+          end
+          rates << change_rate
         end
       end
     end
