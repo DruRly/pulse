@@ -14,6 +14,14 @@ describe Petition do
     end
   end
 
+  describe "#last_365_days_growth_rates" do
+    it "returns growth rates" do
+      petition = Petition.create
+      petition.stub(:last_365_days_signature_counts).and_return([0, 5, 10, 2, 10, 5])
+      petition.last_365_days_growth_rates.should == [0, 500.0, 100.0, -80.0, 400.0, -50.0]
+    end
+  end
+
   describe "::get_petitions" do
     it "retrieves peitions based on count and offset params" do
       petitions = Petition.get_petitions(10,10)

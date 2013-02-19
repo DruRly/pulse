@@ -23,16 +23,16 @@ class Petition < ActiveRecord::Base
   def last_365_days_growth_rates
     signature_counts = last_365_days_signature_counts
     rates = []
-    signature_counts.each_with_index do |elem, i|
+    signature_counts.each_with_index do |current_value, i|
+      old_value = signature_counts[i - 1]
       if i == 0
         rates << 0
       else
-        if elem == 0
-          div = 1
+        if old_value == 0
+          rates << (((current_value)/1.0) * 100)
         else
-          div = elem
+          rates << (((current_value - old_value)/old_value.to_f) * 100)
         end
-        rates << (((elem - signature_counts[i - 1])/div) * 100)
       end
     end
     rates
