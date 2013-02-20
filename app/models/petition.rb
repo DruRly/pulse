@@ -8,11 +8,11 @@ class Petition < ActiveRecord::Base
   WTP_KEY ||= YAML.load_file("#{Rails.root}/config/wtp.yml")["api_key"]
 
 
-  def last_365_days_signature_counts
+  def days_signature_counts(count)
     unless @days_count
       days_count = []
       date = Date.today
-      365.times.each do |i|
+      count.times.each do |i|
         date = date.prev_day
         days_count << signatures.where(signature_date: date).count
       end
@@ -20,25 +20,23 @@ class Petition < ActiveRecord::Base
     @days_count ||= days_count
   end
 
-  def last_365_days_growth_rates
-    unless @rates
-      signature_counts = last_365_days_signature_counts
-      rates = []
-      signature_counts.each_with_index do |current_value, i|
-        old_value = signature_counts[i - 1]
-        if i == 0
-          rates << 0
+  def days_growth_rates(count)
+    signature_counts = days_signature_counts(count)
+    rates = []
+    signature_counts.each_with_index do |current_value, i|
+      old_value = signature_counts[i - 1]
+      if i == 0
+        rates << 0
+      else
+        if old_value == 0
+          rates << (((current_value)/1.0) * 100)
         else
-          if old_value == 0
-            rates << (((current_value)/1.0) * 100)
-          else
-            change_rate = (((current_value - old_value)/old_value.to_f) * 100)
-            rates << change_rate
-          end
+          change_rate = (((current_value - old_value)/old_value.to_f) * 100)
+          rates << change_rate
         end
       end
     end
-    @rates ||= rates
+    rates
   end
 
   def self.get_petitions(count=10, offset=0)
@@ -49,7 +47,7 @@ class Petition < ActiveRecord::Base
   end
 
   def running_rate_average(days)
-    list = last_365_days_growth_rates.last(days)
+    list = days_growth_rates(days)
     list.sum.to_f / list.size
   end
 

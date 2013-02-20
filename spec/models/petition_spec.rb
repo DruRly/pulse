@@ -2,23 +2,23 @@ require 'spec_helper'
 
 describe Petition do
 
-  describe "#last_365_days_signature_counts" do
-    it "includes 365 elements with non-zero counts" do
+  describe "#days_signature_counts" do
+    it "includes 90 elements with non-zero counts" do
       petition = Petition.create
       Signature.create_mocks(5000)
       Signature.store_dates
-      signature_counts = petition.last_365_days_signature_counts
-      signature_counts.count.should == 365
+      signature_counts = petition.days_signature_counts(90)
+      signature_counts.count.should == 90
       signature_counts.first.should_not == 0
       signature_counts.last.should_not == 0
     end
   end
 
-  describe "#last_365_days_growth_rates" do
+  describe "#days_growth_rates" do
     it "returns growth rates" do
       petition = Petition.create
-      petition.stub(:last_365_days_signature_counts).and_return([0, 5, 10, 2, 10, 5])
-      petition.last_365_days_growth_rates.should == [0, 500.0, 100.0, -80.0, 400.0, -50.0]
+      petition.stub(:days_signature_counts).and_return([0, 5, 10, 2, 10, 5])
+      petition.days_growth_rates(6).should == [0, 500.0, 100.0, -80.0, 400.0, -50.0]
     end
   end
 
@@ -38,8 +38,8 @@ describe Petition do
   describe "#running_rate_average" do
     it "averages the rates of a given period" do
       petition = Petition.create
-      petition.stub(:last_365_days_growth_rates).and_return([50.0, 50.0, 100.0, -20.0, -100.0, 50.0])
-      petition.running_rate_average(5).should == 16.0
+      petition.stub(:days_growth_rates).and_return([50.0, 50.0, 100.0, -20.0, -100.0, 50.0])
+      petition.running_rate_average(6).round(2).should == 21.67
     end
   end
 
