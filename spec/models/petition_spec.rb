@@ -35,6 +35,14 @@ describe Petition do
     end
   end
 
+  describe "#running_rate_average" do
+    it "averages the rates of a given period" do
+      petition = Petition.create
+      petition.stub(:last_365_days_growth_rates).and_return([50.0, 50.0, 100.0, -20.0, -100.0, 50.0])
+      petition.running_rate_average(5).should == 16.0
+    end
+  end
+
   describe "::pull_all" do
     it "grabs petition records and associated issues" do
       Petition.pull_all

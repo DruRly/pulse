@@ -21,22 +21,24 @@ class Petition < ActiveRecord::Base
   end
 
   def last_365_days_growth_rates
-    signature_counts = last_365_days_signature_counts
-    rates = []
-    signature_counts.each_with_index do |current_value, i|
-      old_value = signature_counts[i - 1]
-      if i == 0
-        rates << 0
-      else
-        if old_value == 0
-          rates << (((current_value)/1.0) * 100)
+    unless @rates
+      signature_counts = last_365_days_signature_counts
+      rates = []
+      signature_counts.each_with_index do |current_value, i|
+        old_value = signature_counts[i - 1]
+        if i == 0
+          rates << 0
         else
-          change_rate = (((current_value - old_value)/old_value.to_f) * 100)
-          rates << change_rate
+          if old_value == 0
+            rates << (((current_value)/1.0) * 100)
+          else
+            change_rate = (((current_value - old_value)/old_value.to_f) * 100)
+            rates << change_rate
+          end
         end
       end
     end
-    rates
+    @rates ||= rates
   end
 
   def self.get_petitions(count=10, offset=0)
@@ -44,6 +46,16 @@ class Petition < ActiveRecord::Base
     url = "https://petitions.whitehouse.gov/api/v1/petitions.json?key=#{WTP_KEY}&limit=#{count}&offset=#{offset}"
     response = HTTParty.get(url).body
     JSON.parse(response)["results"]
+  end
+
+  def running_rate_average(days)
+    list = last_365_days_growth_rates.last(days)
+    list.sum.to_f / list.size
+  end
+
+  def self.top_by_average(count)
+    sorted = Petition.all.sort_by { |p| p.running_rate_average(7) }
+    sorted.last(count)
   end
 
   def self.pull_all
