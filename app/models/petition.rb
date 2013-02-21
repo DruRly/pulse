@@ -139,7 +139,7 @@ class Petition < ActiveRecord::Base
   end
 
   def self.near_threshold(count)
-    sorted = Petition.last(5).sort_by { |p| p.til_threshold(7) }
+    sorted = Petition.first(5).sort_by { |p| p.til_threshold(7) }
     sorted.first(count)
   end
 end
