@@ -69,4 +69,12 @@ describe Petition do
       petition.petition_created_at.should == hash["created"]
     end
   end
+
+  describe "#til_threshold" do
+    it "tells how many days are left before reaching threshold given a period to average by" do
+      petition = Petition.create(signature_threshold: 3000, signature_count: 400)
+      petition.should_receive(:running_rate_average).and_return(10.0)
+      petition.til_threshold(7).should == 21.14
+    end
+  end
 end

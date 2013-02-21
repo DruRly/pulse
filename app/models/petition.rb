@@ -91,4 +91,20 @@ class Petition < ActiveRecord::Base
       :petition_created_at =>  hash.try(:[], :created)
     )
   end
+
+  def til_threshold(num_days_to_avg_by)
+    goal = signature_threshold
+    rate = running_rate_average(num_days_to_avg_by)
+    current_value = self.signature_count
+    div = goal / current_value.to_f
+    # turn to percentage
+    rate = (rate * 0.01) + 1
+    result = Math.log(div) / Math.log(rate)
+    result.round(2)
+  end
+
+  def self.near_threshold(count)
+    sorted = Petition.last(5).sort_by { |p| p.til_threshold(7) }
+    sorted.first(count)
+  end
 end

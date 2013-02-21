@@ -1,3 +1,15 @@
 <% require 'gchart' %>
 
 <%= high_chart("my_id", @h) %>
+
+<h1>Fastest Growing Petitions</h1>
+<% @rankings.reverse.each do |p| %>
+  <p><%= p.title %></p>
+  <p><%= p.running_rate_average(7) %></p>
+<% end %>
+
+<h1>Near Threshold</h1>
+<% @near_threshold.each do |p| %>
+  <p><%= p.title %></p>
+  <p><%= p.til_threshold(7) %></p>
+<% end %>
