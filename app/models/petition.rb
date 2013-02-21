@@ -61,7 +61,9 @@ class Petition < ActiveRecord::Base
     until results == []
       results = self.get_petitions(100, offset)
       results.map do |result_hash|
+        #store petition
         petition = Petition.create_from_hash(result_hash)
+        #store issues
         result_hash["issues"].map do |issue_hash|
           issue_hash = issue_hash.with_indifferent_access
           issue = Issue.find_or_create_by_api_id(
@@ -70,6 +72,8 @@ class Petition < ActiveRecord::Base
           )
           PetitionIssue.where(petition_id: petition.id, issue_id: issue.id).first_or_create
         end
+        #store signatures
+        petition.store_signatures
       end
       offset += 100
     end
@@ -90,6 +94,36 @@ class Petition < ActiveRecord::Base
       :status => hash.try(:[], :status),
       :petition_created_at =>  hash.try(:[], :created)
     )
+  end
+
+  def get_signatures(count=10, offset=0)
+    url = "https://petitions.whitehouse.gov/api/v1/petitions/#{self.api_id}/signatures.json?key=#{WTP_KEY}&limit=#{count}&offset=#{offset}"
+    response = HTTParty.get(url).body
+    JSON.parse(response)["results"]
+  end
+
+  def get_all_signatures
+    all_signatures = []
+    offset, results = 0
+    until results == []
+      results = get_signatures(100, offset)
+      all_signatures.concat(results)
+      offset += 100
+    end
+    all_signatures
+  end
+
+  def store_signatures
+    get_all_signatures.map do |petition_hash|
+      petition_hash = petition_hash.with_indifferent_access
+      Signature.find_or_create_by_api_id(
+        api_id: petition_hash.try(:[], :id),
+        name: petition_hash.try(:[], :name),
+        zip: petition_hash.try(:[], :zip),
+        created: petition_hash.try(:[], :created),
+        petition_id: self.id
+      )
+    end
   end
 
   def til_threshold(num_days_to_avg_by)

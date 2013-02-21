@@ -77,4 +77,37 @@ describe Petition do
       petition.til_threshold(7).should == 21.14
     end
   end
+
+
+  describe "#store_signatures" do
+    it "stores signatures for a petition" do
+      petition = Petition.create
+      json = [
+        {"id"=>"4f0330e58d8c37bd11000022",
+         "type"=>"signature",
+         "name"=>"MC",
+         "zip"=>"33903",
+         "created"=>1325609189},
+         {"id"=>"4f029b344bd5042123000019",
+          "type"=>"signature",
+          "name"=>"lt",
+          "zip"=>"",
+          "created"=>1325570868}
+      ]
+      petition.should_receive(:get_all_petitions).and_return(json)
+      petition.store_signatures
+
+      petition.signatures.first.api_id.should == json.first["id"]
+      petition.signatures.first.name.should == json.first["name"]
+      petition.signatures.first.zip.should == json.first["zip"]
+      petition.signatures.first.created.should == json.first["created"]
+
+      petition.signatures.last.api_id.should == json.last["id"]
+      petition.signatures.last.name.should == json.last["name"]
+      petition.signatures.last.zip.should == json.last["zip"]
+      petition.signatures.last.created.should == json.last["created"]
+
+      petition.signatures.count.should == 2
+    end
+  end
 end
