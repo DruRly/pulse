@@ -73,7 +73,8 @@ class Petition < ActiveRecord::Base
           PetitionIssue.where(petition_id: petition.id, issue_id: issue.id).first_or_create
         end
         #store signatures
-        petition.store_signatures
+        #petition.store_signatures
+        SignatureWorker.perform_async(petition.id)
       end
       offset += 100
     end
