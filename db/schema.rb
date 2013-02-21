@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130218173029) do
+ActiveRecord::Schema.define(:version => 20130221194847) do
 
   create_table "issues", :force => true do |t|
     t.integer  "api_id"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20130218173029) do
   add_index "petitions", ["api_id"], :name => "index_petitions_on_api_id", :unique => true
 
   create_table "signatures", :force => true do |t|
-    t.integer  "api_id"
+    t.string   "api_id"
     t.string   "signature_type"
     t.string   "name"
     t.string   "city"
