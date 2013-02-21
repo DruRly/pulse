@@ -1,6 +1,9 @@
+require 'sidekiq/web'
 Pulse::Application.routes.draw do
   get "home/index"
   root :to => 'home#index'
+
+  mount Sidekiq::Web => '/sidekiq'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
