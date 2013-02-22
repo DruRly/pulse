@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   def index
     @h = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:chart][:defaultSeriesType] = "area"
-      Petition.first(10).map do |p|
+      Petition.first(30).map do |p|
         f.series(data: p.days_growth_rates(90), showInLegend: false)
       end
     end
