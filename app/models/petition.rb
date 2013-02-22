@@ -73,8 +73,7 @@ class Petition < ActiveRecord::Base
           PetitionIssue.where(petition_id: petition.id, issue_id: issue.id).first_or_create
         end
         #store signatures
-        #petition.store_signatures
-        SignatureWorker.perform_async(petition.id)
+        #SignatureWorker.perform_async(petition.id)
       end
       offset += 100
     end
@@ -139,7 +138,8 @@ class Petition < ActiveRecord::Base
   end
 
   def self.near_threshold(count)
-    sorted = Petition.first(5).sort_by { |p| p.til_threshold(7) }
+    petitions = Petition.select { |p| p.signature_threshold > p.signature_count }
+    sorted = petitions.sort_by { |p| p.til_threshold(7) }
     sorted.first(count)
   end
 end

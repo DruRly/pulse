@@ -3,7 +3,7 @@ class HomeController < ApplicationController
     @h = LazyHighCharts::HighChart.new('graph') do |f|
       f.options[:chart][:defaultSeriesType] = "area"
       Petition.first(10).map do |p|
-        f.series(data: p.days_growth_rates(7), showInLegend: false)
+        f.series(data: p.days_growth_rates(90), showInLegend: false)
       end
     end
 
