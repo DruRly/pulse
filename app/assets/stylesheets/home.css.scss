@@ -75,13 +75,31 @@
 .petition-rate{
   font-size: 20px;
   font-weight: 900;
-  color: #2DAB1D;
   letter-spacing: 1px;
+}
+
+.petition-rate-metric{
+  color: #2DAB1D;
+}
+
+.petition-rate-metric-label{
+  font-weight: 200;
+}
+
+.inline{
+  display: inline;
 }
 
 .petition-days{
   font-size: 20px;
   font-weight: 900;
-  color: #AB261D;
   letter-spacing: 1px;
+}
+
+.petition-days-metric{
+  color: #AB261D;
+}
+
+.petition-days-label{
+  font-weight: 200;
 }

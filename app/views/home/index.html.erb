@@ -24,7 +24,8 @@
           <p><%= p.title %></p>
         </div>
         <div class="petition-rate">
-          <p><%= "#{p.running_rate_average(7)}%" %></p>
+          <p class="petition-rate-metric inline"><%= "#{ p.running_rate_average(7) }%" %></p>
+          <p class="inline petition-rate-metric-label">per day</p>
         </div>
       </div>
     <% end %>
@@ -40,7 +41,8 @@
           <p><%= p.title %></p>
         </div>
         <div class="petition-days">
-          <p><%= "#{p.til_threshold(7)} days" %></p>
+          <p class="inline petition-days-metric"><%= "#{p.til_threshold(7)}" %></p>
+          <p class="inline petition-days-label">days</p>
         </div>
       </div>
     <% end %>
