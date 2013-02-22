@@ -7,8 +7,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div class="container">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner" style="font-family: 'PT Sans Narrow'; font-size: 28px">
+        <div class="container"></div>
+        <div class="logo">
+          <%= link_to "Pulse", '/' %>
+        </div>
+      </div>
+    </div>
+    <%= yield %>
+  </div>
 </body>
 </html>
