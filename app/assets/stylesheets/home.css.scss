@@ -73,9 +73,10 @@
 }
 
 .petition-rate{
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 900;
   letter-spacing: 1px;
+  padding-top: 1%;
 }
 
 .petition-rate-metric{
@@ -91,9 +92,11 @@
 }
 
 .petition-days{
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 900;
   letter-spacing: 1px;
+  width: 100%;
+  padding-top: 1%;
 }
 
 .petition-days-metric{
@@ -111,4 +114,5 @@
 
 .well {
   float: left;
+  width: 100%;
 }
