@@ -16,3 +16,6 @@
 /log/*.log
 /tmp
 /config/wtp.yml
+
+# Ignore IntelliJ Droppings
+\.idea

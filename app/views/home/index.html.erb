@@ -21,7 +21,14 @@
     <% @rankings.reverse.each do |p| %>
       <div class="well">
         <div class="petition-title">
-          <p><%= p.title %></p>
+          <div class="terms">
+            <a href="<%= image_path "title-and-body-images/petition_wordcloud_#{ p.api_id }.png" %>">
+              <%= image_tag "title-and-body-images/petition_wordcloud_#{ p.api_id }.png", :size => "120x120" %>
+            </a>
+          </div>
+          <p>
+            <%= p.title %>
+          </p>
         </div>
         <div class="petition-rate">
           <p class="petition-rate-metric inline"><%= "#{ p.running_rate_average(7) }%" %></p>
@@ -37,6 +44,11 @@
     </div>
     <% @near_threshold.each do |p| %>
       <div class="well">
+        <div class="terms">
+          <a href="<%= image_path "title-and-body-images/petition_wordcloud_#{ p.api_id }.png" %>">
+            <%= image_tag "title-and-body-images/petition_wordcloud_#{ p.api_id }.png", :size => "120x120" %>
+          </a>
+        </div>
         <div class="petition-title">
           <p><%= p.title %></p>
         </div>
