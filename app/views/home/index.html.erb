@@ -1,31 +1,48 @@
 <% require 'gchart' %>
 
-<%= high_chart("my_id", @h) %>
-
-<div id="rate">
-  <h1>Fastest Growing</h1>
-  <% @rankings.reverse.each do |p| %>
-    <div class="well">
-      <div class="petition-title">
-        <p><%= p.title %></p>
-      </div>
-      <div class="petition-rate">
-        <p><%= "#{p.running_rate_average(7)}% / day" %></p>
-      </div>
-    </div>
-  <% end %>
+<div id="hook">
+  <div id="hook-main">
+    Find The Next Big Thing
+  </div>
+  <div id="hook-sub">
+    Pulse predicts when a petition will reach it's threshold
+  </div>
 </div>
 
-<div id="days">
-  <h1>Near Threshold</h1>
-  <% @near_threshold.each do |p| %>
-    <div class="well">
-      <div class="petition-title">
-        <p><%= p.title %></p>
-      </div>
-      <div class="petition-days">
-        <p><%= "#{p.til_threshold(7)} days" %></p>
-      </div>
+<div id="chart">
+  <%= high_chart("my_id", @h) %>
+</div>
+
+<div id="petition-metrics">
+  <div id="rate">
+    <div id="rate-title">
+      <h1>Fastest Growing</h1>
     </div>
-  <% end %>
+    <% @rankings.reverse.each do |p| %>
+      <div class="well">
+        <div class="petition-title">
+          <p><%= p.title %></p>
+        </div>
+        <div class="petition-rate">
+          <p><%= "#{p.running_rate_average(7)}%" %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="days">
+    <div id="days-title">
+      <h1>Near Threshold</h1>
+    </div>
+    <% @near_threshold.each do |p| %>
+      <div class="well">
+        <div class="petition-title">
+          <p><%= p.title %></p>
+        </div>
+        <div class="petition-days">
+          <p><%= "#{p.til_threshold(7)} days" %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

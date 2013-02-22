@@ -2,6 +2,33 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#hook{
+  padding-top: 1%;
+}
+
+#hook-main{
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 40px;
+  text-align: center;
+  padding-bottom: 2%;
+  font-weight: 600;
+}
+
+#hook-sub{
+  font-size: 22px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 700px;
+  text-align: center;
+  font-weight: 300;
+}
+
+#chart{
+  padding-top: 3%;
+}
+
 #rate{
   float:left;
   width: 500px;
@@ -29,4 +56,32 @@
   float: right;
   padding-top: 4px;
   padding-right: 10%;
+}
+
+#petition-metrics{
+  padding-top: 5%;
+}
+
+#rate-title{
+  letter-spacing: 1px;
+  padding-bottom: 3%;
+}
+
+#days-title{
+  letter-spacing: 1px;
+  padding-bottom: 3%;
+}
+
+.petition-rate{
+  font-size: 20px;
+  font-weight: 900;
+  color: #2DAB1D;
+  letter-spacing: 1px;
+}
+
+.petition-days{
+  font-size: 20px;
+  font-weight: 900;
+  color: #AB261D;
+  letter-spacing: 1px;
 }
