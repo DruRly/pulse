@@ -3,7 +3,7 @@
 <%= high_chart("my_id", @h) %>
 
 <div id="rate">
-  <h1>Fastest Growing Petitions</h1>
+  <h1>Fastest Growing</h1>
   <% @rankings.reverse.each do |p| %>
     <div class="well">
       <div class="petition-title">
@@ -24,7 +24,7 @@
         <p><%= p.title %></p>
       </div>
       <div class="petition-days">
-    <p><%= "#{p.til_threshold(7)} days" %></p>
+        <p><%= "#{p.til_threshold(7)} days" %></p>
       </div>
     </div>
   <% end %>
