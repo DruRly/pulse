@@ -15,9 +15,17 @@
   padding-left: 92px;
   padding-top: 11px;
   letter-spacing: 2px;
+  float: left;
 }
 
 .petition-title {
   font-size: 22px;
   line-height: 120%;
+}
+
+#dropdown {
+  position: relative;
+  float: right;
+  padding-top: 4px;
+  padding-right: 10%;
 }

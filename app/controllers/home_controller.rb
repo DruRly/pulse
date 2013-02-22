@@ -9,5 +9,6 @@ class HomeController < ApplicationController
 
     @rankings = Petition.top_by_average(5)
     @near_threshold = Petition.near_threshold(5)
+    @issues = Issue.all.map(&:name).unshift("All Issues")
   end
 end
