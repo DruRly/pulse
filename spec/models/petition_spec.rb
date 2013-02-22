@@ -39,7 +39,7 @@ describe Petition do
     it "averages the rates of a given period" do
       petition = Petition.create
       petition.stub(:days_growth_rates).and_return([50.0, 50.0, 100.0, -20.0, -100.0, 50.0])
-      petition.running_rate_average(6).round(2).should == 21.67
+      petition.running_rate_average(6).should == 21.67
     end
   end
 

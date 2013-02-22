@@ -48,11 +48,12 @@ class Petition < ActiveRecord::Base
 
   def running_rate_average(days)
     list = days_growth_rates(days)
-    list.sum.to_f / list.size
+    avg = list.sum.to_f / list.size
+    avg.round(2)
   end
 
   def self.top_by_average(count)
-    sorted = Petition.all.sort_by { |p| p.running_rate_average(7) }
+    sorted = Petition.first(20).sort_by { |p| p.running_rate_average(7) }
     sorted.last(count)
   end
 
@@ -141,8 +142,8 @@ class Petition < ActiveRecord::Base
 
   def self.near_threshold(count)
     petitions = Petition.select { |p| p.signature_threshold > p.signature_count }
-    sorted = petitions.sort_by { |p| p.til_threshold(15) }
-    sorted = sorted.reject { |days| days.til_threshold(15) < 0}
+    sorted = petitions.sort_by { |p| p.til_threshold(7) }
+    sorted = sorted.reject { |days| days.til_threshold(7) < 0 }
     sorted.first(count)
   end
 end
