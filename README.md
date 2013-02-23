@@ -26,6 +26,9 @@ Petition.pull_all
 
 #Create mock signatures
 Signature.create_mocks(180000)
+
+#Process signatures to gather metadata
+Signature.store_dates
 </pre>
 
 
