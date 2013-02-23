@@ -38,7 +38,7 @@ Signature.create_mocks(180000)
 ###Seed database with real signatures
 *The WTP team mentioned that a databse dump will be available soon. This could be used to seed the database. Cron jobs can then be used to pull new data on a regular basis.*
 ###Enable Filtering
-*Filtering params are being generated. The controller use these params to filter petitions by issue.*
+*Filtering params are being generated. The controller should use these params to filter petitions by issue.*
 ###Add days left before 30-day deadline
 *Use the petition creation date to determine how long a petition has left to reach the threshold. Display these values under "Near Threshold"*
 
